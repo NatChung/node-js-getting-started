@@ -13,8 +13,7 @@ express()
   .post('/', (req, res) => {
     ytdl.getInfo(req.body.videoId,  (err, info) => {
       if (err) throw err
-      var format = ytdl.filterFormats(info.formats, 'video')
-      // var format = ytdl.chooseFormat(info.formats, { quality: 'highest', filter:'video'})
+      var format = ytdl.filterFormats(info.formats, (format) => (format.container === 'mp4' && format.audioEncoding!=null))
       res.json(format)
     })
   })
