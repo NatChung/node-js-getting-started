@@ -14,7 +14,14 @@ express()
     ytdl.getInfo(req.body.videoId,  (err, info) => {
       if (err) throw err
       var format = ytdl.filterFormats(info.formats, (format) => (format.container === 'mp4' && format.audioEncoding!=null))
-      res.json(format)
+      // console.log(info)
+      res.json({
+        vid: info.vid,
+        title: info.title,
+        author: info.author.name,
+        thumbnail: info.thumbnail_url,
+        format
+      })
     })
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
