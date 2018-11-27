@@ -14,13 +14,14 @@ express()
     ytdl.getInfo(req.body.videoId,  (err, info) => {
       if (err) throw err
       var format = ytdl.filterFormats(info.formats, (format) => (format.container === 'mp4' && format.audioEncoding!=null))
-      // console.log(info)
+      
       res.json({
-        vid: info.vid,
+        vid: info.video_id,
         title: info.title,
         author: info.author.name,
-        thumbnail: info.thumbnail_url,
-        format
+        thumbnail: info.thumbnail_url.replace('default.jpg', 'hqdefault.jpg'),
+        lengthSeconds: info.length_seconds,
+        url: format[0].url
       })
     })
   })
